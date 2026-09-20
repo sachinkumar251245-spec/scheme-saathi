@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scheme Saathi</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        /* NAVBAR */
+        nav {
+            background: #0b5ed7;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 25px;
+        }
+
+        nav span {
+            font-size: 14px;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #0b5ed7, #4f9cff);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero h2 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+        }
+
+        /* CONTAINER */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        /* FORM */
+        .form-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .form-box h2 {
+            margin-bottom: 25px;
+            color: #0b5ed7;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 13px 25px;
+            border: none;
+            background: #0b5ed7;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #084298;
+        }
+
+        /* RESULT */
+        #resultSection {
+            display: none;
+        }
+
+        .result-heading {
+            margin: 40px 0 20px;
+        }
+
+        .scheme-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .scheme-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #198754;
+        }
+
+        .scheme-card h3 {
+            color: #0b5ed7;
+            margin-bottom: 12px;
+        }
+
+        .eligible {
+            display: inline-block;
+            background: #d1e7dd;
+            color: #0f5132;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .scheme-card p {
+            line-height: 1.6;
+            margin: 8px 0;
+        }
+
+        .scheme-card ul {
+            margin: 10px 0 10px 20px;
+            line-height: 1.7;
+        }
+
+        .apply-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #198754;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .apply-btn:hover {
+            background: #146c43;
+        }
+
+        .not-found {
+            background: #fff3cd;
+            color: #664d03;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 60px;
+            background: #212529;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* MOBILE */
+        @media(max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .hero h2 {
+                font-size: 30px;
+            }
+
+            .form-grid,
+            .scheme-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+    <h1> Scheme Saathi</h1>
+    <span>Find Government Schemes Easily</span>
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+    <h2>Find Schemes Made for You</h2>
+
+    <p>
+        Enter your details and discover government schemes
+        you may be eligible for.
+    </p>
+</section>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+    <!-- USER FORM -->
+
+    <div class="form-box">
+
+        <h2>👤 Enter Your Details</h2>
+
+        <div class="form-grid">
+
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" id="name" placeholder="Enter your name">
+            </div>
+
+
+            <div class="input-group">
+                <label>Age</label>
+                <input type="number" id="age" placeholder="Enter age">
+            </div>
+
+
+            <div class="input-group">
+                <label>Annual Family Income (₹)</label>
+                <input type="number" id="income" placeholder="Enter annual family income">
+                
+            </div>
+
+
+            <div class="input-group">
+                <label>State</label>
+
+                <select id="state">
+
+                    <option value="">Select State</option>
+
+                    <option value="Punjab">Punjab</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Other">Other</option>
+
+                </select>
+            </div>
+
+
+            <div class="input-group">
+
+                <label>Category</label>
+
+                <select id="category">
+
+                    <option value="">Select Category</option>
+
+                    <option value="General">General</option>
+                    <option value="OBC">OBC</option>
+                    <option value="SC">SC</option>
+                    <option value="ST">ST</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>Occupation</label>
+
+                <select id="occupation">
+
+                    <option value="">Select Occupation</option>
+
+                    <option value="Student">Student</option>
+                    <option value="Farmer">Farmer</option>
+                    <option value="Worker">Worker</option>
+                    <option value="Business">Business</option>
+                    <option value="Other">Other</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <button onclick="findSchemes()">
+            🔍 Find My Schemes
+        </button>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <section id="resultSection">
+
+        <h2 class="result-heading">
+            🎯 Schemes You May Be Eligible For
+        </h2>
+
+        <div id="results" class="scheme-grid"></div>
+
+    </section>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>© 2026 Scheme Saathi</p>
+
+    <p>Helping citizens discover government schemes</p>
+
+</footer>
+
+
+
+<script>
+
+/*
+    SCHEME DATABASE
+
+    This is demo data for the project.
+*/
+
+const schemes = [
+
+    {
+        name: "PM-KISAN",
+        occupation: "Farmer",
+        maxIncome: 1000000,
+
+        reason:
+        "You selected Farmer as your occupation. This scheme provides income support to eligible farmer families.",
+
+        documents: [
+            "Aadhaar Card",
+            "Land Records",
+            "Bank Account Details",
+            "Mobile Number"
+        ],
+
+        apply:
+        "Visit the official PM-KISAN portal and complete farmer registration.",
+
+        link:
+        "https://pmkisan.gov.in/"
+    },
+
+
+    {
+        name: "Post Matric Scholarship",
+        occupation: "Student",
+        categories: ["SC", "ST", "OBC"],
+        maxIncome: 300000,
+
+        reason:
+        "You are a student and your selected category may qualify for post-matric scholarship support subject to scheme/state rules.",
+
+        documents: [
+            "Aadhaar Card",
+            "Income Certificate",
+            "Caste Certificate",
+            "College ID",
+            "Bank Account"
+        ],
+
+        apply:
+        "Check your state's scholarship portal or the National Scholarship Portal for the applicable scholarship.",
+
+        link:
+        "https://scholarships.gov.in/"
+    },
+
+
+    {
+        name: "PM Scholarship Scheme",
+        occupation: "Student",
+        maxIncome: 600000,
+
+        reason:
+        "You are a student and your family income falls within the demo income threshold used by this project.",
+
+        documents: [
+            "Aadhaar Card",
+            "Income Certificate",
+            "Educational Documents",
+            "Bank Account",
+            "Identity Proof"
+        ],
+
+        apply:
+        "Check the official scholarship portal for current eligibility and application instructions.",
+
+        link:
+        "https://scholarships.gov.in/"
+    },
+
+
+    {
+        name: "Ayushman Bharat / PM-JAY",
+        maxIncome: 300000,
+
+        reason:
+        "Your family income is within the demo threshold. Actual PM-JAY eligibility depends on the official beneficiary database and applicable rules.",
+
+        documents: [
+            "Aadhaar Card",
+            "Ration Card",
+            "Identity Proof",
+            "Mobile Number"
+        ],
+
+        apply:
+        "Check your beneficiary status through the official PM-JAY channels.",
+
+        link:
+        "https://pmjay.gov.in/"
+    },
+
+
+    {
+        name: "PM SVANidhi",
+        occupation: "Business",
+        maxIncome: 500000,
+
+        reason:
+        "You selected Business as your occupation. Street-vendor eligibility and other conditions need to be verified under the official scheme rules.",
+
+        documents: [
+            "Aadhaar Card",
+            "Identity Proof",
+            "Address Proof",
+            "Bank Account Details",
+            "Vendor-related documents"
+        ],
+
+        apply:
+        "Check the official PM SVANidhi application process through the government portal or participating lender.",
+
+        link:
+        "https://pmsvanidhi.mohua.gov.in/"
+    }
+
+];
+
+
+
+/*
+    FIND ELIGIBLE SCHEMES
+*/
+
+function findSchemes() {
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const age =
+        Number(document.getElementById("age").value);
+
+    const income =
+        Number(document.getElementById("income").value);
+
+    const state =
+        document.getElementById("state").value;
+
+    const category =
+        document.getElementById("category").value;
+
+    const occupation =
+        document.getElementById("occupation").value;
+
+
+    /* BASIC VALIDATION */
+
+    if (
+        name === "" ||
+        !age ||
+        !income ||
+        state === "" ||
+        category === "" ||
+        occupation === ""
+    ) {
+
+        alert("Please fill all the details.");
+
+        return;
+    }
+
+
+    /*
+        CHECK EACH SCHEME
+    */
+
+    const eligibleSchemes = schemes.filter(scheme => {
+
+        /* Income condition */
+
+        if (
+            scheme.maxIncome &&
+            income > scheme.maxIncome
+        ) {
+
+            return false;
+        }
+
+
+        /* Occupation condition */
+
+        if (
+            scheme.occupation &&
+            scheme.occupation !== occupation
+        ) {
+
+            return false;
+        }
+
+
+        /* Category condition */
+
+        if (
+            scheme.categories &&
+            !scheme.categories.includes(category)
+        ) {
+
+            return false;
+        }
+
+
+        return true;
+
+    });
+
+
+    /*
+        DISPLAY RESULTS
+    */
+
+    const resultBox =
+        document.getElementById("results");
+
+    resultBox.innerHTML = "";
+
+
+    if (eligibleSchemes.length === 0) {
+
+        resultBox.innerHTML = `
+
+            <div class="not-found">
+
+                <h3>No matching scheme found</h3>
+
+                <p>
+                    Based on the information entered,
+                    this demo could not find a matching scheme.
+                    Please check official government portals
+                    for additional schemes and updated eligibility.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+    else {
+
+        eligibleSchemes.forEach(scheme => {
+
+            let documents = "";
+
+            scheme.documents.forEach(doc => {
+
+                documents += `<li>${doc}</li>`;
+
+            });
+
+
+            resultBox.innerHTML += `
+
+                <div class="scheme-card">
+
+                    <span class="eligible">
+                        ✓ Potential Match
+                    </span>
+
+                    <h3>
+                        ${scheme.name}
+                    </h3>
+
+
+                    <p>
+                        <strong>Why you may qualify:</strong>
+                    </p>
+
+                    <p>
+                        ${scheme.reason}
+                    </p>
+
+
+                    <p>
+                        <strong>📄 Documents Required:</strong>
+                    </p>
+
+                    <ul>
+                        ${documents}
+                    </ul>
+
+
+                    <p>
+                        <strong>📝 How to Apply:</strong>
+                    </p>
+
+                    <p>
+                        ${scheme.apply}
+                    </p>
+
+
+                    <a
+                        class="apply-btn"
+                        href="${scheme.link}"
+                        target="_blank"
+                    >
+                        Apply / Check Official Portal →
+                    </a>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    /*
+        SHOW RESULT SECTION
+    */
+
+    document.getElementById("resultSection").style.display = "block";
+
+
+    /*
+        SCROLL TO RESULTS
+    */
+
+    document.getElementById("resultSection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+</script>
+
+</body>
+</html>
+```
